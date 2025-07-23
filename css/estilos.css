@@ -1,0 +1,82 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  background: black;
+}
+
+.slide {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: none;
+}
+
+.slide.active {
+  display: block;
+  animation: fadein 1s;
+}
+
+@keyframes fadein {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+✅ 3. js/slides.js (lista de imágenes/videos y lógica del carrusel)
+javascript
+Copiar
+Editar
+const files = [
+  "media/video1.mp4",
+  "img/Inst - 01 p01.png",
+  "media/video2.mp4",
+  "img/Inst - 01 p02.png",
+  "img/Inst - 01 p03.png",
+  "img/Inst - 01 p04.png",
+  "img/LOGO - REDES EL CLON REDES FONDO ROJO .png"
+];
+
+const slideshow = document.getElementById("slideshow");
+
+files.forEach((file, i) => {
+  const ext = file.split('.').pop().toLowerCase();
+  let element;
+
+  if (ext === "mp4") {
+    element = document.createElement("video");
+    element.src = file;
+    element.autoplay = true;
+    element.muted = true;
+    element.loop = true;
+  } else {
+    element = document.createElement("img");
+    element.src = file;
+  }
+
+  element.classList.add("slide");
+  if (i === 0) element.classList.add("active");
+  slideshow.appendChild(element);
+});
+
+const slides = document.querySelectorAll(".slide");
+let current = 0;
+const duration = 10000; // 10 segundos
+
+setInterval(() => {
+  slides[current].classList.remove("active");
+  if (slides[current].tagName === "VIDEO") slides[current].pause();
+
+  current = (current + 1) % slides.length;
+
+  slides[current].classList.add("active");
+  if (slides[current].tagName === "VIDEO") {
+    slides[current].currentTime = 0;
+    slides[current].play();
+  }
+}, duration);
