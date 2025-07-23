@@ -7,53 +7,18 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-
+!-- Reproductor de radio oculto -->
+<audio id="radio" autoplay loop style="display: none;">
+  <source src="http://142.171.10.66:8092/stream" type="audio/mp3">
+  Tu navegador no soporta audio en HTML5.
+</audio>
   <div class="carousel" id="carousel"></div>
 
    <!-- Botón para activar audio si no arranca -->
   <button id="playAudio" class="play-button">🔊 Activar radio</button>
 
   <script src="script.js"></script>
-!-- Reproductor de radio oculto -->
-<audio id="radio" autoplay loop style="display: none;">
-  <source src="http://142.171.10.66:8092/stream" type="audio/mp3">
-  Tu navegador no soporta audio en HTML5.
-</audio>
 
-<!-- Botón visible si el navegador bloquea autoplay -->
-<button id="activarAudio" style="
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  padding: 1rem 2rem;
-  background: #00ff88;
-  border: none;
-  font-size: 1.2rem;
-  cursor: pointer;
-  display: none;
-  z-index: 10;
-">
-  Presioná para escuchar la radio
-</button>
-
-<script>
-  const radio = document.getElementById('radio');
-  const btn = document.getElementById('activarAudio');
-
-  window.addEventListener('load', () => {
-    const playPromise = radio.play();
-    if (playPromise !== undefined) {
-      playPromise.catch(() => {
-        btn.style.display = 'block';
-      });
-    }
-  });
-
-  btn.addEventListener('click', () => {
-    radio.play();
-    btn.style.display = 'none';
-  });
-</script>
+<script language="javascript" type="text/javascript" src="https://yoda.alonhosting.com/system/player.js"></script>
 </body>
 </html>
