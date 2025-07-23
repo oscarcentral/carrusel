@@ -10,11 +10,11 @@
 
   <div class="carousel" id="carousel"></div>
 
-  <!-- Reproductor de radio invisible -->
-  <audio autoplay loop>
-    <source src="http://142.171.10.66:8092/stream" type="audio/mp3">
-    Tu navegador no soporta audio en HTML5.
-  </audio>
+  <!-- Reproductor de radio oculto (Alloncast) -->
+<audio id="radio" autoplay loop style="display: none">
+  <source src="http://142.171.10.66:8092/stream" type="audio/mp3">
+  Tu navegador no soporta audio en HTML5.
+</audio>
 
   <!-- Botón para activar audio si no arranca -->
   <button id="playAudio" class="play-button">🔊 Activar radio</button>
