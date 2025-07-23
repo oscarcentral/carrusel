@@ -3,6 +3,30 @@
   padding: 0;
   box-sizing: border-box;
 }
+body {
+  margin: 0;
+  background-color: #000;
+  overflow: hidden;
+}
+
+#media-container {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#media-container img,
+#media-container video {
+  max-width: 100vw;
+  max-height: 100vh;
+  width: auto;
+  height: auto;
+  display: block;
+  object-fit: contain;
+}
+
 body, html {
   width: 100%;
   height: 100%;
