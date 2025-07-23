@@ -11,7 +11,10 @@
   <div class="carousel" id="carousel"></div>
 
   <!-- Reproductor de radio invisible -->
-  <audio id="radio" src="https://radio.alloncast.com:8000/stream" autoplay muted></audio>
+  <audio autoplay loop>
+    <source src="http://142.171.10.66:8092/stream" type="audio/mp3">
+    Tu navegador no soporta audio en HTML5.
+  </audio>
 
   <!-- Botón para activar audio si no arranca -->
   <button id="playAudio" class="play-button">🔊 Activar radio</button>
