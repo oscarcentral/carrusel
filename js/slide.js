@@ -1,68 +1,49 @@
-const slideshow = document.getElementById("slideshow");
-const defaultDuration = 10000; // 10 segundos para imágenes
+const slides = [
+  { type: 'image', src: 'img/1.png' },
+  { type: 'image', src: 'img/2.png' },
+  { type: 'image', src: 'img/3.png' }
+];
+
 let current = 0;
-let slides = [];
+const carousel = document.getElementById('carousel');
 
-fetch("slides.json")
-  .then(response => response.json())
-  .then(files => {
-    files.forEach((file, i) => {
-      const ext = file.split('.').pop().toLowerCase();
-      let element;
+function showSlide(index) {
+  carousel.innerHTML = ''; // Limpia el contenedor
 
-      if (ext === "mp4") {
-        element = document.createElement("video");
-        element.src = file;
-        element.autoplay = true;
-        element.muted = true;
-        element.loop = false; // desactivamos loop
-      } else {
-        element = document.createElement("img");
-        element.src = file;
-      }
+  const slide = slides[index];
+  let element;
 
-      element.classList.add("slide");
-      if (i === 0) element.classList.add("active");
-      slideshow.appendChild(element);
-    });
+  if (slide.type === 'image') {
+    element = document.createElement('img');
+    element.src = slide.src;
+    element.className = 'slide';
+    carousel.appendChild(element);
 
-    slides = document.querySelectorAll(".slide");
-    startSlideshow();
-  })
-  .catch(err => {
-    console.error("Error cargando slides.json", err);
-    slideshow.innerHTML = "<p style='color:white'>Error cargando presentación.</p>";
-  });
-
-function startSlideshow() {
-  if (slides.length === 0) return;
-
-  const currentSlide = slides[current];
-  currentSlide.classList.add("active");
-
-  if (currentSlide.tagName === "VIDEO") {
-    currentSlide.currentTime = 0;
-    currentSlide.play();
-
-    currentSlide.onended = () => {
-      nextSlide();
-    };
-  } else {
-    setTimeout(() => {
-      nextSlide();
-    }, defaultDuration);
+    setTimeout(nextSlide, 5000); // Imagen: 5 seg
+  } else if (slide.type === 'video') {
+    element = document.createElement('video');
+    element.src = slide.src;
+    element.className = 'slide';
+    element.autoplay = true;
+    element.muted = true;
+    element.onended = nextSlide;
+    carousel.appendChild(element);
   }
 }
 
 function nextSlide() {
-  const currentSlide = slides[current];
-  currentSlide.classList.remove("active");
-
-  if (currentSlide.tagName === "VIDEO") {
-    currentSlide.pause();
-    currentSlide.onended = null;
-  }
-
   current = (current + 1) % slides.length;
-  startSlideshow();
+  showSlide(current);
 }
+
+function habilitarAudio() {
+  const audio = document.getElementById('bg-audio');
+  audio.muted = false;
+  audio.play();
+  document.getElementById('audio-control').style.display = 'none';
+}
+
+// Iniciar carrusel
+window.addEventListener('DOMContentLoaded', () => {
+  showSlide(current);
+});
