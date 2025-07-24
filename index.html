@@ -1,56 +1,95 @@
-<html>
-<head><meta charset="utf-8">
-	<link href="img/favicon.ico" rel="shortcut icon" />
-	<link href="img/favicon.ico" rel="apple-itouch-icon" /><meta http-equiv= "refresh" content="7400"><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-	<title>&quot;El CLON musica&quot;</title>
-	<meta name="description" content=""><meta name="viewport" content="width=device-width">
-	<link href="css/bootstrap.min.css" rel="stylesheet" />
-	<style type="text/css">body {
-                padding-top: 0px;
-                padding-bottom: 0px;
-            }
-	</style>
-	<link href="css/bootstrap-responsive.min.css" rel="stylesheet" />
-	<link href="css/main.css" rel="stylesheet" /><script src="js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Carrusel Full Pantalla + Radio</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      background-color: black;
+    }
+
+    .carousel {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .slide {
+      width: 100%;
+      height: 100vh;
+      object-fit: cover;
+      display: none;
+    }
+
+    .slide.active {
+      display: block;
+    }
+
+    #playButton {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: rgba(255,255,255,0.8);
+      color: black;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+      z-index: 1000;
+    }
+
+    #playButton:hover {
+      background-color: #ddd;
+    }
+  </style>
 </head>
 <body>
-<p>&nbsp;
-<audio autoplay="" controls="" hidden=""><source src="http://142.171.10.66:8092/stream" type="audio/mp3" /> unsupported !!</audio>
-<!--<div class="cc_player" data-username="elclon" data-skin="foobar" data-autoplay="1" hidden="1" >Cargando ...</div>--></p>
 
-<div class="foto"><script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script><script src="js/vendor/bootstrap.min.js"></script><script src="js/jquery.backstretch.min.js"></script><script>
-                jQuery.backstretch([
-                    "img/LOGO -EL CLON TAN URUGUAYO COMO VOS .png"
-                    
+  <div class="carousel">
+    <img class="slide active" src="img/imagen1.png" alt="Imagen 1">
+    <img class="slide" src="img/imagen2.png" alt="Imagen 2">
+    <img class="slide" src="img/imagen3.png" alt="Imagen 3">
+  </div>
 
-, "img/Inst - 01 p01.png"
-, "img/Inst - 01 p02.png"
-, "img/Inst - 01 p03.png"
-, "img/Inst - 01 p04.png"
-, "img/Inst - 02 p01.png"
-, "img/Inst - 02 p02.png"
-, "img/Inst - 02 p03.png"
-, "img/Inst - 02 p04.png"
-, "img/Inst - 03 p01.png"
-, "img/Inst - 03 p02.png"
-, "img/Inst - 03 p03.png"
-, "img/LOGO - REDES EL CLON REDES FONDO ROJO .png"
-, "img/Inst - 03 p04.png"
-, "img/Inst - 04 p01.png"
-, "img/Inst - 04 p02.png"
-, "img/Inst - 04 p03.png"
-, "img/Inst - 04 p04.png"
-, "img/Inst - 05 p01.png"
-, "img/Inst - 05 p02.png"
-, "img/Inst - 05 p03.png"
-, "img/Inst - 05 p04.png"
+  <!-- Botón para habilitar el audio -->
+  <button id="playButton">▶ Escuchar Radio</button>
 
+  <!-- Elemento de audio oculto -->
+  <audio id="radioPlayer" preload="none">
+    <source src="http://142.171.10.66:8092/stream" type="audio/mpeg">
+    Tu navegador no soporta audio en línea.
+  </audio>
 
+  <script>
+    const slides = document.querySelectorAll('.slide');
+    let currentIndex = 0;
 
+    function showNextSlide() {
+      slides[currentIndex].classList.remove('active');
+      currentIndex = (currentIndex + 1) % slides.length;
+      slides[currentIndex].classList.add('active');
+    }
 
+    setInterval(showNextSlide, 7000); // 7 segundos por slide
 
+    const playButton = document.getElementById('playButton');
+    const radio = document.getElementById('radioPlayer');
 
-                ], {duration: 10000, fade: 0100}
-                );
-            </script></div>
-<script language="javascript" type="text/javascript" src="https://yoda.alonhosting.com/system/player.js"></script></body>
+    playButton.addEventListener('click', () => {
+      radio.play().then(() => {
+        playButton.style.display = 'none';
+      }).catch(err => {
+        alert('No se pudo iniciar el audio. Intenta nuevamente.');
+      });
+    });
+  </script>
+</body>
+</html>
