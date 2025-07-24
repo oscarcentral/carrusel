@@ -1,21 +1,78 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Carrusel + Radio</title>
-  <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      margin: 0;
+      background-color: #000;
+      color: #fff;
+      font-family: Arial, sans-serif;
+    }
+    .carrusel-container {
+      position: relative;
+      width: 100%;
+      height: 70vh;
+      overflow: hidden;
+    }
+    .slide {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      display: none;
+      object-fit: cover;
+    }
+    .slide.active {
+      display: block;
+    }
+    video.slide {
+      object-fit: cover;
+    }
+    .radio-player {
+      text-align: center;
+      padding: 20px;
+    }
+    audio {
+      width: 300px;
+      max-width: 90%;
+    }
+  </style>
 </head>
 <body>
-<!-- Reproductor de radio oculto -->
-<audio autoplay="" controls="" hidden=""><source src="http://142.171.10.66:8092/stream" type="audio/mp3" /> unsupported !!</audio>
-  <div class="carousel" id="carousel"></div>
 
-   <!-- Botón para activar audio si no arranca -->
-  <button id="playAudio" class="play-button">🔊 Activar radio</button>
+  <!-- Carrusel -->
+  <div class="carrusel-container">
+    <img class="slide active" src="https://via.placeholder.com/1280x720/0000FF/FFFFFF?text=Imagen+1" alt="Imagen 1">
+    <img class="slide" src="https://via.placeholder.com/1280x720/FF0000/FFFFFF?text=Imagen+2" alt="Imagen 2">
+    <video class="slide" autoplay muted loop>
+      <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+      Tu navegador no soporta video.
+    </video>
+  </div>
 
-  <script src="script.js"></script>
+  <!-- Reproductor de radio -->
+  <div class="radio-player">
+    <h2>🎧 El Clon Radio</h2>
+    <audio controls autoplay>
+      <source src="http://142.44.210.78:7080/;" type="audio/mpeg">
+      Tu navegador no soporta audio HTML5.
+    </audio>
+  </div>
 
-<script language="javascript" type="text/javascript" src="https://yoda.alonhosting.com/system/player.js"></script>
+  <script>
+    const slides = document.querySelectorAll('.slide');
+    let current = 0;
+
+    function nextSlide() {
+      slides[current].classList.remove('active');
+      current = (current + 1) % slides.length;
+      slides[current].classList.add('active');
+    }
+
+    setInterval(nextSlide, 6000); // Cambia cada 6 segundos
+  </script>
+
 </body>
 </html>
